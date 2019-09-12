@@ -14,6 +14,7 @@
 // ex -> ""./HW1 2 12" 2
 // argc = 3
 // argv[] = {2,12}
+
 int main(int argc, char *argv[]) {
 
     int numOfChildern = strtol(argv[1], NULL, 10);
