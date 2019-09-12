@@ -17,16 +17,17 @@
 
 void calcFactor(int factorNumber) {
     int factorList[50];
-    printf("Factors of %d are: \n", factorNumber);
+    printf("Factors of %d are: ", factorNumber);
     for(int j =1; j <= factorNumber; j++)
     {
         int count = 0;
         if (factorNumber % j == 0) {
             factorList[count] = j;
-            printf("%d\n", j);
+            printf("%d ", j);
         }
         count++;
     }
+    printf("\n");
 }
 
 
