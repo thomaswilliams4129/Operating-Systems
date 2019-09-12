@@ -11,40 +11,51 @@
 
 // argc -> stores number of command-line arguments passed by the user including the name of the program
 // argv[] -> is array of character pointers listing all the arguments
-// ex -> ""./HW1 2 12" 2
+// ex -> ""./HW1 2 12"
 // argc = 3
-// argv[] = {2,12}
+// argv[] = {./HW1, 2, 12}
 
-int main(int argc, char *argv[]) {
-
-    int numOfChildern = strtol(argv[1], NULL, 10);
-    int number = strtol(argv[2], NULL, 10);
-    int factorList[52];
-
-    if (numOfChildern == 1) {
-        printf("%d\n", numOfChildern);
-    } else if(numOfChildern == 2) {
-        printf("%d\n", numOfChildern);
-    } else if (numOfChildern == 4) {
-        printf("%d\n", numOfChildern);
-    }
-
-    printf("Factors of %d are: \n", number);
-    for(int j =1; j <= number; j++)
+void calcFactor(int factorNumber) {
+    int factorList[50];
+    printf("Factors of %d are: \n", factorNumber);
+    for(int j =1; j <= factorNumber; j++)
     {
         int count = 0;
-        if (number % j == 0) {
+        if (factorNumber % j == 0) {
             factorList[count] = j;
             printf("%d\n", j);
         }
         count++;
     }
+}
 
-    // printf("argc = %d\n", argc);
 
-    // for(int i = 1; i < argc; i++) {
-    //     printf("argv postion %d = %s\n", i, argv[i]);
-    // }
+void createChildren(int numOfChildren) {
+    // Need to create the number of children 1,2,4
+    if (numOfChildren == 1) {
+
+        printf("Number of Childern = %d\n", numOfChildren);
+
+    } else if(numOfChildren == 2) {
+
+        printf("Number of Childern = %d\n", numOfChildren);
+
+    } else if (numOfChildren == 4) {
+
+        printf("Number of Childern = %d\n", numOfChildren);
+
+    }
+}
+
+int main(int argc, char *argv[]) {
+
+    //variables
+    int numOfChildren = strtol(argv[1], NULL, 10);
+    int factorNumber = strtol(argv[2], NULL, 10);
+    // int factorList[50] = calcFactor(factorNumber);
+
+    createChildren(numOfChildren);
+    calcFactor(factorNumber);
     return 0;
 
 }
