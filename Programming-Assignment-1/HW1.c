@@ -8,6 +8,8 @@
 ************************************************/
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/wait.h>
 
 // argc -> stores number of command-line arguments passed by the user including the name of the program
 // argv[] -> is array of character pointers listing all the arguments
@@ -32,19 +34,42 @@ void calcFactor(int factorNumber) {
 
 
 void createChildren(int numOfChildren) {
-    // Need to create the number of children 1,2,4
     if (numOfChildren == 1) {
-
         printf("Number of Childern = %d\n", numOfChildren);
-
+        for(int i = 0; i < 1; i++) {
+            if (fork()==0) {
+                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
+                exit(0);
+            }
+        } 
+        for(int i = 0; i < 1; i++) {
+            wait(NULL);
+        }
     } else if(numOfChildren == 2) {
-
         printf("Number of Childern = %d\n", numOfChildren);
-
-    } else if (numOfChildren == 4) {
-
+        for(int i = 0; i < 2; i++) {
+            if (fork()==0) {
+                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
+                exit(0);
+            }
+        } 
+        for(int i = 0; i < 2; i++) {
+            wait(NULL);
+        }
+    } else if (numOfChildren == 3) {
         printf("Number of Childern = %d\n", numOfChildren);
-
+        for(int i = 0; i < 3; i++) {
+            if (fork()==0) {
+                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
+                exit(0);
+            }
+        } 
+        for(int i = 0; i < 3; i++) {
+            wait(NULL);
+        }
+    } else {
+        printf("!!!!ERROR!!!! Input 1 to 3 children.\n");
+        exit(0);
     }
 }
 
@@ -53,10 +78,11 @@ int main(int argc, char *argv[]) {
     //variables
     int numOfChildren = strtol(argv[1], NULL, 10);
     int factorNumber = strtol(argv[2], NULL, 10);
+   
     // int factorList[50] = calcFactor(factorNumber);
-
-    createChildren(numOfChildren);
     calcFactor(factorNumber);
+    createChildren(numOfChildren);
+
     return 0;
 
 }
