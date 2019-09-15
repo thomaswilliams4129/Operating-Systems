@@ -13,12 +13,18 @@
 
 // argc -> stores number of command-line arguments passed by the user including the name of the program
 // argv[] -> is array of character pointers listing all the arguments
-// ex -> ""./HW1 2 12"
+// ex -> "./HW1 2 12"
 // argc = 3
 // argv[] = {./HW1, 2, 12}
 
-void calcFactor(int factorNumber) {
+int main(int argc, char *argv[]) {
+
+    //variables
+    int numOfChildren = strtol(argv[1], NULL, 10);
+    int factorNumber = strtol(argv[2], NULL, 10);
     int factorList[50];
+
+    // factors the number entered in by the user
     printf("Factors of %d are: ", factorNumber);
     for(int j =1; j <= factorNumber; j++)
     {
@@ -30,10 +36,8 @@ void calcFactor(int factorNumber) {
         count++;
     }
     printf("\n");
-}
 
-
-void createChildren(int numOfChildren) {
+    // creates the children based on user input
     if (numOfChildren == 1) {
         printf("Number of Childern = %d\n", numOfChildren);
         for(int i = 0; i < 1; i++) {
@@ -71,17 +75,6 @@ void createChildren(int numOfChildren) {
         printf("!!!!ERROR!!!! Input 1 to 3 children.\n");
         exit(0);
     }
-}
-
-int main(int argc, char *argv[]) {
-
-    //variables
-    int numOfChildren = strtol(argv[1], NULL, 10);
-    int factorNumber = strtol(argv[2], NULL, 10);
-   
-    // int factorList[50] = calcFactor(factorNumber);
-    calcFactor(factorNumber);
-    createChildren(numOfChildren);
 
     return 0;
 
