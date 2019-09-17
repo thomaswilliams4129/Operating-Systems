@@ -185,7 +185,7 @@ int main(int argc, char *argv[]) {
             close(p1[0]);   // closes the read
         }
     } else if (numOfChildren == 3) {
-        
+        // ! create the condition for creating 3 children
     }
     return 0;
 }
