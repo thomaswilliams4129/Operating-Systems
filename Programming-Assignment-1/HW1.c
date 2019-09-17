@@ -22,60 +22,62 @@ int main(int argc, char *argv[]) {
     //variables
     int numOfChildren = strtol(argv[1], NULL, 10);
     int factorNumber = strtol(argv[2], NULL, 10);
-    int factorList[50];
+    int factorList[101];
 
-    // factors the number entered in by the user
+    int count = 0; // count for array length
+
+    int fd[2];
+    pipe(fd);
+
+    int sum = 0;
+    
+     //* factors the number entered in by the user
     printf("Factors of %d are: ", factorNumber);
     for(int j =1; j <= factorNumber; j++)
     {
-        int count = 0;
         if (factorNumber % j == 0) {
-            factorList[count] = j;
+            factorList[count++] = j;
             printf("%d ", j);
         }
-        count++;
     }
     printf("\n");
 
-    // creates the children based on user input
-    if (numOfChildren == 1) {
-        printf("Number of Childern = %d\n", numOfChildren);
-        for(int i = 0; i < 1; i++) {
-            if (fork()==0) {
-                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
-                exit(0);
-            }
-        } 
-        for(int i = 0; i < 1; i++) {
-            wait(NULL);
-        }
-    } else if(numOfChildren == 2) {
-        printf("Number of Childern = %d\n", numOfChildren);
-        for(int i = 0; i < 2; i++) {
-            if (fork()==0) {
-                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
-                exit(0);
-            }
-        } 
-        for(int i = 0; i < 2; i++) {
-            wait(NULL);
-        }
-    } else if (numOfChildren == 3) {
-        printf("Number of Childern = %d\n", numOfChildren);
-        for(int i = 0; i < 3; i++) {
-            if (fork()==0) {
-                printf("[son] pid %d from [parent] pid %d\n", getpid(),getppid());
-                exit(0);
-            }
-        } 
-        for(int i = 0; i < 3; i++) {
-            wait(NULL);
-        }
-    } else {
-        printf("!!!!ERROR!!!! Input 1 to 3 children.\n");
-        exit(0);
+    printf("I am the parent with pid: %d sending the array: ", (int) getppid());
+    for (int j = 0; j < count; j++) {
+        printf("%d ", factorList[j]);   // print array
     }
+    printf("\n");   // spacing
+
+    int rc = fork();
+
+    if (rc < 0) {
+        // fork failed; exit
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0) {
+        close(fd[0]);
+        for (int i=0; i<count; i++) {
+            sum = sum + factorList[i];
+        }
+        write(fd[1], &sum, sizeof(sum));
+        printf("I am the child with pid: %d, adding the array ", (int) getpid());
+        for (int j = 0; j < count; j++) {
+            printf("%d ", factorList[j]);   // print array
+        }
+        printf("and sending partial sum %d\n", sum);
+        //sleep(1);
+        close(0);
+        exit(0);   //* kill the process after is done
+    } else {
+        int final = 0;
+
+        close(fd[1]);
+        read(fd[0], &final, sizeof(sum));
+
+        printf("I am the parent with pid %d receiving from child with pid %d thepartial sum %d, the total sum is %d\n", (int) getppid(), (int) getpid(), final, final);
+         close(fd[0]);
+    }
+    
 
     return 0;
-
 }
