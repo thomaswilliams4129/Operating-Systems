@@ -6,6 +6,6 @@ To run this:
     then ./nameOfExe numOfChildren factorNum
 
     example:
-        gcc 4129_ThomasWilliams_Programming_Assignment1.c.c -o Run.exe
+        gcc 4129_ThomasWilliams_Programming_Assignment1.c -o Run.exe
         ./Run.exe 1 12
 
