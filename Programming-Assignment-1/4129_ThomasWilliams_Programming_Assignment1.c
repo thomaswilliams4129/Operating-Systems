@@ -22,8 +22,8 @@
 int main(int argc, char *argv[]) {
 
     //variables
-    int numOfChildren = strtol(argv[1], NULL, 10);
-    int factorNumber = strtol(argv[2], NULL, 10);
+    int numOfChildren = atoi(argv[1]);
+    int factorNumber = atoi(argv[2]);
 
     int factorList[101];
     int count = 0; // count for array length
@@ -41,12 +41,10 @@ int main(int argc, char *argv[]) {
     pipe(p3);
 
     //factors the number entered in by the user
-    // printf("Factors of %d are: ", factorNumber);
     for(int j =1; j <= factorNumber; j++)
     {
         if (factorNumber % j == 0) {
             factorList[count++] = j;
-            // printf("%d ", j);
         }
     }
 
