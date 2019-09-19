@@ -198,7 +198,6 @@ int main(int argc, char *argv[]) {
             close(p1[0]);
         }
     } else if (numOfChildren == 3) {
-        // ! create the condition for creating 3 children
          
         //getppid() - will return process id of parent function
 	    p_process_id = getppid();
