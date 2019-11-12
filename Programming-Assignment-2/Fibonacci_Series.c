@@ -1,27 +1,43 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <pthread.h>
 
+int shared_data[1000];
 
-void generateFibSeq(int fibNumber) {
-    int i, t1 = 0, t2 = 1, nextTerm;
+void *generateFibSeq(void* number) {
+    int i, firstNumber = 0, secondNumber = 1, nextNumber;
     
-    printf("Fibonacci Series: ");
-    for (i = 1; i <= fibNumber; i++)
-    {
-        printf("%d ", t1);
-        nextTerm = t1 + t2;
-        t1 = t2;
-        t2 = nextTerm;
+    int *pointer;
+    pointer = (int*) number;
+    int total = *pointer;
+    
+    for (i = 0; i < total; i++) {
+        shared_data[i] = firstNumber;
+        nextNumber = firstNumber + secondNumber;
+        firstNumber = secondNumber;
+        secondNumber = nextNumber;
     }
-    printf("\n\n");
+    
+    return 0;
 }
 
 
 int main(int argc, char *argv[]) {
     
     int fibNumber = atoi(argv[1]);
-    generateFibSeq(fibNumber);
     
+    pthread_t thread; // create thread
+    
+    pthread_create(&thread, NULL, generateFibSeq, (void*) &fibNumber); //starts fibonacci thread
+    pthread_join(thread, NULL); //waits for thread to finish
+    
+    
+    //output to command prompt after thread finishes.
+    printf("Output:\n");
+    for(int i = 0; i < fibNumber; i++) {
+        printf("%d ",shared_data[i]);
+    }
+    printf("\n");
     
     
     return 0;
