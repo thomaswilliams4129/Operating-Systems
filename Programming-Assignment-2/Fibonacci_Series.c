@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include <assert.h>
 
 int shared_data[1000];
 
@@ -21,6 +22,7 @@ void *generate_fib_seq(void* number) {
     
     return 0;
 }
+
 void parent_output(int fibNumber) {
     printf("Output:\n");
     for(int i = 0; i < fibNumber; i++) {
@@ -38,7 +40,7 @@ int main(int argc, char *argv[]) {
     pthread_t thread;
     
     //starts fibonacci thread
-    pthread_create(&thread, NULL, generate_fib_seq, (void*) &fibNumber);
+    int p = pthread_create(&thread, NULL, generate_fib_seq, (void*) &fibNumber); assert(p == 0);
     
     //waits for thread to finish
     pthread_join(thread, NULL);
