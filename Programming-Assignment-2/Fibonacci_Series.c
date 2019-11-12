@@ -1,3 +1,10 @@
+/**
+ Author: Thomas Williams
+ Date: November 11, 2019
+ Class: OPERATING SYSTEMS
+ Assignment: Programming Assignment 2 (Threads) 
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
